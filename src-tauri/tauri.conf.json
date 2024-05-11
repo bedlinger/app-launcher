@@ -15,13 +15,20 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "window": {
+        "all": true
       }
     },
     "windows": [
       {
-        "title": "app-launcher",
+        "title": "App-Launcher",
         "width": 800,
-        "height": 600
+        "height": 400,
+        "resizable": false,
+        "fullscreen": false,
+        "transparent": true,
+        "decorations": false
       }
     ],
     "security": {
