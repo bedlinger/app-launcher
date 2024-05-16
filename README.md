@@ -6,4 +6,4 @@ Das Ziel ist es eine Desktop-App zu erstellen mit [Tauri](https://tauri.app/), w
 
 ## Motivation
 
-Ich habe mich für dieses Projekt entschieden, da ich gerne mit Tauri arbeiten wollte und es eine gute Möglichkeit ist, um die Funktionalität von Tauri zu testen. Ebenso bin ich mit der Windows-Search unzufriden und wollte eine eigene Lösung dafür finden
+Ich habe mich für dieses Projekt entschieden, da ich gerne mit Tauri arbeiten wollte und es eine gute Möglichkeit ist, um die Funktionalität von Tauri zu testen. Ebenso bin ich mit der Windows-Search unzufriden und wollte eine eigene Lösung dafür finden.

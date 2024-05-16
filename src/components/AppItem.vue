@@ -13,6 +13,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import App from '../types/App'
+import { appWindow } from '@tauri-apps/api/window'
 import { invoke } from '@tauri-apps/api'
 
 export default defineComponent({
@@ -28,7 +29,7 @@ export default defineComponent({
             invoke('launch_app', { app })
                 .catch(console.error)
                 .then(_onfullfilled => {
-                    // appWindow.close()
+                    appWindow.hide()
                 })
         },
         openLocation(event: Event, app: App) {

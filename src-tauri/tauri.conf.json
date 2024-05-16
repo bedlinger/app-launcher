@@ -24,6 +24,10 @@
         "decorations": false
       }
     ],
+    "systemTray": {
+      "iconPath": "icons/icon.png",
+      "title": "App-Launcher"
+    },
     "security": {
       "csp": null
     },
