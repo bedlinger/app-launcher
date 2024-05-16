@@ -3,7 +3,7 @@
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_installed_apps, launch_app])
+        .invoke_handler(tauri::generate_handler![get_installed_apps, launch_app, open_location])
         .run(tauri::generate_context!())
         .unwrap_or_else(|e| eprintln!("Error while running tauri application: {}", e));
 }
@@ -54,10 +54,17 @@ fn get_apps_from_dir(path: &str, apps: &mut Vec<App>) {
 
 #[tauri::command]
 fn launch_app(app: App) {
-    println!("Launching app: {}", app.path);
-    // Verknüpfung öffnen
     if let Ok(_) = std::process::Command::new("explorer")
         .arg(app.path)
+        .spawn() {
+        return;
+    }
+}
+
+#[tauri::command]
+fn open_location(app: App) {
+    if let Ok(_) = std::process::Command::new("explorer")
+        .arg("/select,").arg(app.path)
         .spawn() {
         return;
     }

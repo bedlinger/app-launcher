@@ -20,6 +20,8 @@
                         <q-item-section>
                             {{ app.name }}
                         </q-item-section>
+                        <q-btn label="Open location" no-caps flat dense icon="launch"
+                            @click.stop="openLocation($event, app)" />
                     </q-item>
                 </q-list>
             </q-page>
@@ -58,6 +60,11 @@ export default {
                 .then(_onfullfilled => {
                     // appWindow.close()
                 })
+        },
+        openLocation(event: Event, app: App) {
+            event.stopPropagation();
+            invoke('open_location', { app })
+                .catch(console.error)
         }
     },
     computed: {
