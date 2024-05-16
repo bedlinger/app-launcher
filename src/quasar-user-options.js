@@ -1,6 +1,6 @@
-
-import 'quasar/dist/quasar.css'
-import '@quasar/extras/material-icons/material-icons.css'
+import { Dark } from "quasar";
+import "quasar/dist/quasar.css";
+import "@quasar/extras/material-icons/material-icons.css";
 
 // To be used on app.use(Quasar, { ... })
 export default {
@@ -16,8 +16,10 @@ export default {
       positive: "#21BA45",
       negative: "#C10015",
       info: "#31CCEC",
-      warning: "#F2C037"
-    }
+      warning: "#F2C037",
+    },
   },
-  plugins: {},
+  plugins: {
+    Dark,
+  },
 };
