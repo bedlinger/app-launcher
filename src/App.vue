@@ -1,28 +1,11 @@
 <template>
     <q-layout view="hHh lpR fFf">
-        <q-header elevated class="bg-primary text-white">
-            <q-toolbar>
-                <q-toolbar-title>
-                    App-Launcher
-                </q-toolbar-title>
-                <q-space />
-                <q-btn flat round dense icon="more_vert" />
-            </q-toolbar>
-        </q-header>
+        <AppHeader />
         <q-page-container>
             <q-page class="q-pa-md bg-white">
                 <q-input v-model="search" placeholder="Search" filled dense autofocus debounce="200" />
                 <q-list bordered separator>
-                    <q-item v-for="app in filteredApps" :key="app.path.toString" clickable @click="launchApp(app)">
-                        <q-item-section avatar>
-                            <q-icon name="apps" />
-                        </q-item-section>
-                        <q-item-section>
-                            {{ app.name }}
-                        </q-item-section>
-                        <q-btn label="Open location" no-caps flat dense icon="launch"
-                            @click.stop="openLocation($event, app)" />
-                    </q-item>
+                    <AppItem v-for="app in filteredApps" :key="app.path.toString()" :app="app" />
                 </q-list>
             </q-page>
         </q-page-container>
@@ -30,16 +13,18 @@
 </template>
 
 <script lang="ts">
+import App from './types/App'
+import AppHeader from './components/AppHeader.vue'
+import AppItem from './components/AppItem.vue'
 import { appWindow } from '@tauri-apps/api/window'
 import { invoke } from '@tauri-apps/api'
 
-interface App {
-    name: String,
-    path: String
-}
-
 export default {
     name: "App",
+    components: {
+        AppHeader,
+        AppItem
+    },
     data() {
         return {
             apps: [] as App[],
@@ -48,23 +33,7 @@ export default {
     },
     methods: {
         async getInstalledApps() {
-            try {
-                this.apps = await invoke('get_installed_apps')
-            } catch (error) {
-                console.error("Error retrieving installed apps:", error)
-            }
-        },
-        launchApp(app: App) {
-            invoke('launch_app', { app })
-                .catch(console.error)
-                .then(_onfullfilled => {
-                    // appWindow.close()
-                })
-        },
-        openLocation(event: Event, app: App) {
-            event.stopPropagation();
-            invoke('open_location', { app })
-                .catch(console.error)
+            this.apps = await invoke('get_installed_apps')
         }
     },
     computed: {
@@ -74,9 +43,7 @@ export default {
     },
     mounted() {
         this.getInstalledApps()
-            .catch(console.error)
         appWindow.center()
-            .catch(console.error)
     }
 }
 </script>
