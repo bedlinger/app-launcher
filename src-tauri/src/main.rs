@@ -23,6 +23,7 @@ fn get_installed_apps() -> Vec<App> {
     for path in paths {
         get_apps_from_dir(&path, &mut apps);
     }
+    apps.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
     apps
 }
 

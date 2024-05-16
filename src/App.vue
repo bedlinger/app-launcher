@@ -11,7 +11,7 @@
         </q-header>
         <q-page-container>
             <q-page class="q-pa-md bg-white">
-                <q-input v-model="search" placeholder="Search" filled dense debounce="200" />
+                <q-input v-model="search" placeholder="Search" filled dense autofocus debounce="200" />
                 <q-list bordered separator>
                     <q-item v-for="app in filteredApps" :key="app.path.toString" clickable @click="launchApp(app)">
                         <q-item-section avatar>
@@ -56,7 +56,7 @@ export default {
             invoke('launch_app', { app })
                 .catch(console.error)
                 .then(_onfullfilled => {
-                    appWindow.close()
+                    // appWindow.close()
                 })
         }
     },
