@@ -6,7 +6,7 @@ import "@quasar/extras/material-icons/material-icons.css";
 export default {
   config: {
     brand: {
-      primary: "#1976d2",
+      primary: "#3758ef",
       secondary: "#26A69A",
       accent: "#9C27B0",
 
