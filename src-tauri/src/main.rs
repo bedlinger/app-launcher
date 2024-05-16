@@ -35,8 +35,12 @@ fn get_apps_from_dir(path: &str, apps: &mut Vec<App>) {
                         get_apps_from_dir(&entry.path().to_string_lossy().to_string(), apps);
                     } else if entry.path().extension().and_then(std::ffi::OsStr::to_str) == Some("lnk") {
                         if let Ok(name) = entry.file_name().into_string() {
+                            let name_without_extension = std::path::Path::new(&name)
+                                .file_stem()
+                                .and_then(std::ffi::OsStr::to_str)
+                                .unwrap_or(&name);
                             apps.push(App {
-                                name: name,
+                                name: name_without_extension.to_string(),
                                 path: entry.path().to_string_lossy().to_string()
                             });
                         }

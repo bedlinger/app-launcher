@@ -11,9 +11,9 @@
         </q-header>
         <q-page-container>
             <q-page class="q-pa-md bg-white">
-                <q-input v-model="search" placeholder="Search" filled dense debounce="300" />
+                <q-input v-model="search" placeholder="Search" filled dense debounce="200" />
                 <q-list bordered separator>
-                    <q-item v-for="app in apps" :key="app.path.toString" clickable @click="launchApp(app)">
+                    <q-item v-for="app in filteredApps" :key="app.path.toString" clickable @click="launchApp(app)">
                         <q-item-section avatar>
                             <q-icon name="apps" />
                         </q-item-section>
@@ -45,9 +45,9 @@ export default {
         }
     },
     methods: {
-        async getInstalledApps(searchTerm: string = '') {
+        async getInstalledApps() {
             try {
-                this.apps = await invoke('get_installed_apps', { searchTerm })
+                this.apps = await invoke('get_installed_apps')
             } catch (error) {
                 console.error("Error retrieving installed apps:", error)
             }
@@ -56,18 +56,18 @@ export default {
             invoke('launch_app', { app })
                 .catch(console.error)
                 .then(_onfullfilled => {
-                    // appWindow.close()
+                    appWindow.close()
                 })
         }
     },
     computed: {
-    },
-    watch: {
-        search(newSearch: string) {
-            this.getInstalledApps(newSearch)
+        filteredApps() {
+            return this.apps.filter(app => app.name.toLowerCase().includes(this.search.toLowerCase()))
         }
     },
     mounted() {
+        this.getInstalledApps()
+            .catch(console.error)
         appWindow.center()
             .catch(console.error)
     }
