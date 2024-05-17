@@ -30,6 +30,7 @@ export default defineComponent({
                 .catch(console.error)
                 .then(_onfullfilled => {
                     appWindow.hide()
+                    this.$emit('clearSearch')
                 })
         },
         openLocation(event: Event, app: App) {

@@ -5,7 +5,7 @@
             <q-page :class="`q-pa-md ${darkMode ? 'bg-dark text-light' : 'text-dark'}`">
                 <q-input v-model="search" placeholder="Search" filled dense autofocus debounce="200" />
                 <q-list bordered separator>
-                    <AppItem v-for="app in filteredApps" :key="app.path.toString()" :app="app" />
+                    <AppItem v-for="app in filteredApps" :key="app.path.toString()" :app="app" @clearSearch="search = ''" />
                 </q-list>
             </q-page>
         </q-page-container>
