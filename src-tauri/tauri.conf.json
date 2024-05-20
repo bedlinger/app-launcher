@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "app-launcher",
-    "version": "0.0.0"
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
@@ -17,7 +17,7 @@
       {
         "title": "App-Launcher",
         "width": 800,
-        "height": 400,
+        "height": 550,
         "resizable": false,
         "fullscreen": false,
         "transparent": false,
