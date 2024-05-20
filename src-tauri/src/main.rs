@@ -58,9 +58,14 @@ struct App {
 #[tauri::command]
 fn get_installed_apps() -> Vec<App> {
     let mut apps = vec![];
-    let paths = vec!["C:\\ProgramData\\Microsoft\\Windows\\Start Menu"];
+    let username = std::env::var("USERNAME").unwrap_or_else(|_| "default".to_string());
+    let formatted_path = format!("C:\\Users\\{}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs", username);
+    let paths = vec![
+        "C:\\ProgramData\\Microsoft\\Windows\\Start Menu",
+        &formatted_path,
+    ];
     for path in paths {
-        get_apps_from_dir(&path, &mut apps);
+        get_apps_from_dir(path, &mut apps);
     }
     apps.sort_by(|a, b| a.name.to_lowercase().cmp(&b.name.to_lowercase()));
     apps
@@ -74,7 +79,7 @@ fn get_apps_from_dir(path: &str, apps: &mut Vec<App>) {
                     if metadata.is_dir() {
                         get_apps_from_dir(&entry.path().to_string_lossy().to_string(), apps);
                     } else if entry.path().extension().and_then(std::ffi::OsStr::to_str)
-                        == Some("lnk")
+                        == Some("lnk") || entry.path().extension().and_then(std::ffi::OsStr::to_str) == Some("url")
                     {
                         if let Ok(name) = entry.file_name().into_string() {
                             let name_without_extension = std::path::Path::new(&name)
