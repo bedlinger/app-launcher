@@ -8,7 +8,7 @@
             <q-btn flat round dense icon="settings" @click="showSettingsModal = true" />
         </q-toolbar>
     </q-header>
-    <SettingsModal v-model:showSettings="showSettingsModal" @close="closeSettingsModal" />
+    <SettingsModal v-model:showSettings="showSettingsModal" @close="closeSettingsModal()" />
 </template>
 
 <script lang="ts">

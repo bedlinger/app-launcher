@@ -1,10 +1,9 @@
 <template>
-    <q-dialog v-model="showSettings" transition-show="slide-up" transition-hide="slide-down"
-        @escape-key="() => $emit('close')">
+    <q-dialog v-model="showSettings" transition-show="slide-up" transition-hide="slide-down" @escape-key="() => close()">
         <q-card style="width: 70%;">
             <q-toolbar>
                 <q-toolbar-title><span class="text-weight-bold">Settings</span></q-toolbar-title>
-                <q-btn flat round dense icon="close" @click="$emit('close')" />
+                <q-btn flat round dense icon="close" @click="close()" />
             </q-toolbar>
             <q-separator />
             <q-card-section>
@@ -35,6 +34,20 @@ export default defineComponent({
             color: '#3758ef'
         }
     },
+    methods: {
+        close() {
+            this.$emit('close')
+            this.saveSettings()
+        },
+        saveSettings() {
+            localStorage.setItem('settings', JSON.stringify({ darkMode: this.darkMode, color: this.color }))
+        },
+        loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('settings') || '{}')
+            this.darkMode = settings.darkMode || false
+            this.color = settings.color || '#3758ef'
+        }
+    },
     watch: {
         darkMode(value: boolean) {
             Dark.set(value)
@@ -42,6 +55,9 @@ export default defineComponent({
         color(value: string) {
             document.body.style.setProperty('--q-primary', value)
         }
+    },
+    mounted() {
+        this.loadSettings()
     }
 })
 </script>
