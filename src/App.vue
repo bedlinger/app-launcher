@@ -20,6 +20,7 @@ import AppItem from './components/AppItem.vue'
 import { appWindow } from '@tauri-apps/api/window'
 import { invoke } from '@tauri-apps/api'
 import { enable } from "tauri-plugin-autostart-api"
+import { register, isRegistered } from '@tauri-apps/api/globalShortcut'
 
 export default {
     name: "App",
@@ -39,6 +40,17 @@ export default {
         },
         async enableAutoStart() {
             await enable()
+        },
+        async registerGlobalShortcut() {
+            if (!await isRegistered('Alt+Space')) {
+                await register('Alt+Space', async () => {
+                    if (await appWindow.isVisible()) {
+                        appWindow.hide()
+                    } else {
+                        appWindow.show()
+                    }
+                })
+            }
         }
     },
     computed: {
@@ -50,6 +62,7 @@ export default {
         this.getInstalledApps()
         appWindow.center()
         this.enableAutoStart()
+        this.registerGlobalShortcut()
     }
 }
 </script>

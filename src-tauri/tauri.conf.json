@@ -7,7 +7,7 @@
   },
   "package": {
     "productName": "app-launcher",
-    "version": "0.0.1"
+    "version": "2024.0.1"
   },
   "tauri": {
     "allowlist": {
