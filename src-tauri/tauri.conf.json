@@ -21,7 +21,8 @@
         "resizable": false,
         "fullscreen": false,
         "transparent": false,
-        "decorations": false
+        "decorations": false,
+        "skipTaskbar": true
       }
     ],
     "systemTray": {
