@@ -22,7 +22,8 @@
         "fullscreen": false,
         "transparent": false,
         "decorations": false,
-        "skipTaskbar": true
+        "skipTaskbar": true,
+        "alwaysOnTop": true
       }
     ],
     "systemTray": {
