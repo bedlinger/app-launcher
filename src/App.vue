@@ -19,6 +19,7 @@ import AppHeader from './components/AppHeader.vue'
 import AppItem from './components/AppItem.vue'
 import { appWindow } from '@tauri-apps/api/window'
 import { invoke } from '@tauri-apps/api'
+import { enable } from "tauri-plugin-autostart-api"
 
 export default {
     name: "App",
@@ -35,6 +36,9 @@ export default {
     methods: {
         async getInstalledApps() {
             this.apps = await invoke('get_installed_apps')
+        },
+        async enableAutoStart() {
+            await enable()
         }
     },
     computed: {
@@ -45,6 +49,7 @@ export default {
     mounted() {
         this.getInstalledApps()
         appWindow.center()
+        this.enableAutoStart()
     }
 }
 </script>
