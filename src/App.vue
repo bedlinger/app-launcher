@@ -28,7 +28,7 @@ export default {
         AppHeader,
         AppItem
     },
-    data() {
+    data() {    
         return {
             apps: [] as App[],
             search: ''
@@ -49,6 +49,7 @@ export default {
                         this.search = ''
                     } else {
                         await appWindow.show();
+                        await appWindow.setFocus();
                         (this.$refs.search as HTMLInputElement).focus()
                     }
                 })
