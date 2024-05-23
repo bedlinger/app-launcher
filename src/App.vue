@@ -47,6 +47,7 @@ export default {
                     if (await appWindow.isVisible()) {
                         await appWindow.hide()
                         this.search = ''
+                        window.scrollTo(0, 0)
                     } else {
                         await appWindow.show();
                         await appWindow.setFocus();
