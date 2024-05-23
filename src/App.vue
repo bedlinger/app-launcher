@@ -5,7 +5,7 @@
             <q-page :class="`q-pa-md`">
                 <q-input ref="search" v-model="search" placeholder="Search" filled dense autofocus debounce="200" />
                 <q-list bordered separator>
-                    <AppItem v-for="app in filteredApps" :key="app.path.toString()" :app="app"
+                    <AppItem v-for="(app, _index) in filteredApps" :key="app.path.toString()" :app="app" 
                         @clearSearch="search = ''" />
                 </q-list>
             </q-page>
@@ -28,7 +28,7 @@ export default {
         AppHeader,
         AppItem
     },
-    data() {    
+    data() {
         return {
             apps: [] as App[],
             search: ''
@@ -58,7 +58,7 @@ export default {
         }
     },
     computed: {
-        filteredApps() {
+        filteredApps(): App[] {
             return this.apps.filter(app => app.name.toLowerCase().includes(this.search.toLowerCase()))
         }
     },
