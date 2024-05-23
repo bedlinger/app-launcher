@@ -3,7 +3,7 @@
         <AppHeader />
         <q-page-container>
             <q-page :class="`q-pa-md`">
-                <q-input v-model=" search" placeholder="Search" filled dense autofocus debounce="200" />
+                <q-input ref="search" v-model="search" placeholder="Search" filled dense autofocus debounce="200" />
                 <q-list bordered separator>
                     <AppItem v-for="app in filteredApps" :key="app.path.toString()" :app="app"
                         @clearSearch="search = ''" />
@@ -42,12 +42,14 @@ export default {
             await enable()
         },
         async registerGlobalShortcut() {
-            if (!await isRegistered('Alt+Space')) {
-                await register('Alt+Space', async () => {
+            if (!await isRegistered('Alt+S')) {
+                await register('Alt+S', async () => {
                     if (await appWindow.isVisible()) {
-                        appWindow.hide()
+                        await appWindow.hide()
+                        this.search = ''
                     } else {
-                        appWindow.show()
+                        await appWindow.show();
+                        (this.$refs.search as HTMLInputElement).focus()
                     }
                 })
             }
