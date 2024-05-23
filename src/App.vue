@@ -55,6 +55,11 @@ export default {
                     }
                 })
             }
+            if (!await isRegistered('Alt+F4')) {
+                await register('Alt+F4', async () => {
+                    await appWindow.close()
+                })
+            }
         }
     },
     computed: {
