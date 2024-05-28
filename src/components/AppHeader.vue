@@ -8,7 +8,8 @@
             <q-btn flat round dense icon="settings" @click="showSettingsModal = true" />
         </q-toolbar>
     </q-header>
-    <SettingsModal v-model:showSettings="showSettingsModal" @close="closeSettingsModal()" />
+    <SettingsModal v-model:showSettings="showSettingsModal" @close="closeSettingsModal()"
+        @update-open-shortcut="updateOpenShortcut" />
 </template>
 
 <script lang="ts">
@@ -28,6 +29,9 @@ export default defineComponent({
     methods: {
         closeSettingsModal() {
             this.showSettingsModal = false;
+        },
+        updateOpenShortcut(newShortcut: string) {
+            this.$emit('update-open-shortcut', newShortcut);
         }
     }
 })

@@ -11,9 +11,10 @@
                 <div class="row">
                     <q-toggle label="Dark Mode" v-model="darkMode" class="col" />
                     <q-toggle label="Auto Start" v-model="autostart" class="col" />
-                    <q-input label="Shortcut" v-model="shortcut" outlined dense class="col" />
+                    <q-input class="col" label="Shortcut" v-model="shortcut" outlined dense
+                        @keydown="updateOpenShortcut($event)" />
                 </div>
-                <div class="column items-center justify-center q-pt-sm">
+                <div class=" column items-center justify-center q-pt-sm">
                     <p class="text-h6">Primary Color</p>
                     <q-color v-model="color" no-header no-footer style="width: 270px;" />
                 </div>
@@ -41,6 +42,7 @@ export default defineComponent({
             darkMode: false,
             autostart: true,
             shortcut: 'Alt+S',
+            keys: [] as string[],
             color: '#3758ef'
         }
     },
@@ -49,14 +51,41 @@ export default defineComponent({
             this.$emit('close')
             this.saveSettings()
         },
+        updateOpenShortcut(event: KeyboardEvent) {
+            this.keys = []
+            if (event.key !== 'Meta' && event.key !== 'Control' && event.key !== 'Shift' && event.key !== 'Alt' && event.key !== 'CapsLock' && event.key !== 'Tab' && event.key !== 'Escape' && event.key !== 'Enter' && event.key !== 'Backspace' && event.key !== 'Delete' && event.key !== 'ArrowUp' && event.key !== 'ArrowDown' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight' && event.key !== 'Home' && event.key !== 'End' && event.key !== 'PageUp' && event.key !== 'PageDown' && event.key !== 'Insert' && event.key !== 'PrintScreen' && event.key !== 'ScrollLock' && event.key !== 'Pause') {
+                this.keys.push(event.key.toUpperCase())
+            }
+            if (event.ctrlKey) {
+                this.keys.push('Ctrl')
+            }
+            if (event.metaKey) {
+                this.keys.push('Meta')
+            }
+            if (event.shiftKey) {
+                this.keys.push('Shift')
+            }
+            if (event.altKey) {
+                this.keys.push('Alt')
+            } 
+            this.shortcut = this.keys.reverse().join('+')
+            this.$emit('update-open-shortcut', this.shortcut)
+        },
         saveSettings() {
-            localStorage.setItem('settings', JSON.stringify({ darkMode: this.darkMode, autostart: this.autostart, color: this.color }))
+            localStorage.setItem('settings', JSON.stringify({
+                darkMode: this.darkMode,
+                autostart: this.autostart,
+                color: this.color,
+                shortcut: this.shortcut
+            }))
         },
         loadSettings() {
             const settings = JSON.parse(localStorage.getItem('settings') || '{}')
             this.darkMode = settings.darkMode !== undefined ? settings.darkMode : false
             this.autostart = settings.autostart !== undefined ? settings.autostart : true
             this.color = settings.color || '#3758ef'
+            this.shortcut = settings.shortcut || 'Alt+S'
+            this.$emit('update-open-shortcut', this.shortcut)
         }
     },
     watch: {

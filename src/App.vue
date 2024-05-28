@@ -1,6 +1,6 @@
 <template>
     <q-layout view="hHh lpR fFf">
-        <AppHeader />
+        <AppHeader @update-open-shortcut="updateOpenShortcut" />
         <q-page-container>
             <q-page class="q-pa-md">
                 <q-input ref="search" v-model="search" placeholder="Search" filled dense autofocus />
@@ -19,7 +19,7 @@ import AppHeader from './components/AppHeader.vue'
 import AppItem from './components/AppItem.vue'
 import { appWindow } from '@tauri-apps/api/window'
 import { invoke } from '@tauri-apps/api'
-import { register, isRegistered } from '@tauri-apps/api/globalShortcut'
+import { isRegistered, register, unregister } from '@tauri-apps/api/globalShortcut'
 
 export default {
     name: "App",
@@ -30,27 +30,32 @@ export default {
     data() {
         return {
             apps: [] as App[],
-            search: ''
+            search: '',
+            currentOpenShortcut: ''
         }
     },
     methods: {
         async getInstalledApps() {
             this.apps = await invoke('get_installed_apps')
         },
-        async registerGlobalShortcut() {
-            if (!await isRegistered('Alt+S')) {
-                await register('Alt+S', async () => {
-                    if (await appWindow.isVisible()) {
-                        await appWindow.hide()
-                        this.search = ''
-                        window.scrollTo(0, 0)
-                    } else {
-                        await appWindow.show();
-                        await appWindow.setFocus();
-                        (this.$refs.search as HTMLInputElement).focus()
-                    }
-                })
+        async updateOpenShortcut(newShortcut: string) {
+            if (this.currentOpenShortcut) {
+                await unregister(this.currentOpenShortcut)
             }
+            await register(newShortcut, async () => {
+                if (await appWindow.isVisible()) {
+                    await appWindow.hide()
+                    this.search = ''
+                    window.scrollTo(0, 0)
+                } else {
+                    await appWindow.show();
+                    await appWindow.setFocus();
+                    (this.$refs.search as HTMLInputElement).focus()
+                }
+            })
+            this.currentOpenShortcut = newShortcut;
+        },
+        async updateCloseShortcut() {
             if (!await isRegistered('Alt+F4')) {
                 await register('Alt+F4', async () => {
                     await appWindow.close()
@@ -66,7 +71,7 @@ export default {
     mounted() {
         this.getInstalledApps()
         appWindow.center()
-        this.registerGlobalShortcut()
+        this.updateCloseShortcut()
     }
 }
 </script>
