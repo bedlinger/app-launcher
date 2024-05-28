@@ -44,7 +44,7 @@ export default {
             }
             await register(newShortcut, async () => {
                 if (await appWindow.isVisible()) {
-                    await appWindow.hide()
+                    await appWindow.hide();
                     this.search = ''
                     window.scrollTo(0, 0)
                 } else {

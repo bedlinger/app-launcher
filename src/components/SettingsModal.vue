@@ -1,10 +1,10 @@
 <template>
     <q-dialog v-model="showSettings" transition-show="slide-up" transition-hide="slide-down"
-        @escape-key="() => close()">
+        @escape-key="() => close">
         <q-card style="width: 70%;">
             <q-toolbar>
                 <q-toolbar-title><span class="text-weight-bold">Settings</span></q-toolbar-title>
-                <q-btn flat round dense icon="close" @click="close()" />
+                <q-btn flat round dense icon="close" @click="close" />
             </q-toolbar>
             <q-separator />
             <q-card-section>
@@ -12,7 +12,7 @@
                     <q-toggle label="Dark Mode" v-model="darkMode" class="col" />
                     <q-toggle label="Auto Start" v-model="autostart" class="col" />
                     <q-input class="col" label="Shortcut" v-model="shortcut" outlined dense
-                        @keydown="updateOpenShortcut($event)" />
+                        @keydown="updateOpenShortcut" />
                 </div>
                 <div class=" column items-center justify-center q-pt-sm">
                     <p class="text-h6">Primary Color</p>
