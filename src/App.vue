@@ -19,7 +19,6 @@ import AppHeader from './components/AppHeader.vue'
 import AppItem from './components/AppItem.vue'
 import { appWindow } from '@tauri-apps/api/window'
 import { invoke } from '@tauri-apps/api'
-import { enable } from "tauri-plugin-autostart-api"
 import { register, isRegistered } from '@tauri-apps/api/globalShortcut'
 
 export default {
@@ -37,9 +36,6 @@ export default {
     methods: {
         async getInstalledApps() {
             this.apps = await invoke('get_installed_apps')
-        },
-        async enableAutoStart() {
-            await enable()
         },
         async registerGlobalShortcut() {
             if (!await isRegistered('Alt+S')) {
@@ -70,7 +66,6 @@ export default {
     mounted() {
         this.getInstalledApps()
         appWindow.center()
-        this.enableAutoStart()
         this.registerGlobalShortcut()
     }
 }

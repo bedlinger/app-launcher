@@ -8,6 +8,7 @@
             <q-separator />
             <q-card-section>
                 <q-toggle label="Dark Mode?" v-model="darkMode" />
+                <q-toggle label="Auto Start?" v-model="autostart"  />
                 <p class="text-h6">Primary Color</p>
                 <q-color v-model="color" no-header no-footer style="max-width: 250px;" />
             </q-card-section>
@@ -18,6 +19,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { Dark } from 'quasar'
+import { enable, disable } from "tauri-plugin-autostart-api"
 
 export default defineComponent({
     name: 'SettingsModal',
@@ -31,6 +33,7 @@ export default defineComponent({
     data() {
         return {
             darkMode: false,
+            autostart: true,
             color: '#3758ef'
         }
     },
@@ -40,17 +43,25 @@ export default defineComponent({
             this.saveSettings()
         },
         saveSettings() {
-            localStorage.setItem('settings', JSON.stringify({ darkMode: this.darkMode, color: this.color }))
+            localStorage.setItem('settings', JSON.stringify({ darkMode: this.darkMode, autostart: this.autostart, color: this.color }))
         },
         loadSettings() {
             const settings = JSON.parse(localStorage.getItem('settings') || '{}')
-            this.darkMode = settings.darkMode || false
+            this.darkMode = settings.darkMode !== undefined ? settings.darkMode : false
+            this.autostart = settings.autostart !== undefined ? settings.autostart : true
             this.color = settings.color || '#3758ef'
         }
     },
     watch: {
         darkMode(value: boolean) {
             Dark.set(value)
+        },
+        async autostart(value: boolean) {
+            if (value) {
+                await enable()
+            } else {
+                await disable()
+            }
         },
         color(value: string) {
             document.body.style.setProperty('--q-primary', value)
