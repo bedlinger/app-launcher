@@ -8,10 +8,15 @@
             </q-toolbar>
             <q-separator />
             <q-card-section>
-                <q-toggle label="Dark Mode" v-model="darkMode" class="q-pr-md" />
-                <q-toggle label="Auto Start" v-model="autostart" />
-                <p class="text-h6">Primary Color</p>
-                <q-color v-model="color" no-header no-footer style="max-width: 250px;" />
+                <div class="row">
+                    <q-toggle label="Dark Mode" v-model="darkMode" class="col" />
+                    <q-toggle label="Auto Start" v-model="autostart" class="col" />
+                    <q-input label="Shortcut" v-model="shortcut" outlined dense class="col" />
+                </div>
+                <div class="column items-center justify-center q-pt-sm">
+                    <p class="text-h6">Primary Color</p>
+                    <q-color v-model="color" no-header no-footer style="width: 270px;" />
+                </div>
             </q-card-section>
         </q-card>
     </q-dialog>
@@ -35,6 +40,7 @@ export default defineComponent({
         return {
             darkMode: false,
             autostart: true,
+            shortcut: 'Alt+S',
             color: '#3758ef'
         }
     },
