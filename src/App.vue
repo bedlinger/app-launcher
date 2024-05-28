@@ -2,7 +2,7 @@
     <q-layout view="hHh lpR fFf">
         <AppHeader />
         <q-page-container>
-            <q-page :class="`q-pa-md`">
+            <q-page class="q-pa-md">
                 <q-input ref="search" v-model="search" placeholder="Search" filled dense autofocus />
                 <q-list bordered separator>
                     <AppItem v-for="(app, _index) in filteredApps" :key="app.path.toString()" :app="app" 
