@@ -53,7 +53,7 @@ export default {
                     (this.$refs.search as HTMLInputElement).focus()
                 }
             })
-            this.currentOpenShortcut = newShortcut;
+            this.currentOpenShortcut = newShortcut
         },
         async updateCloseShortcut() {
             if (!await isRegistered('Alt+F4')) {
