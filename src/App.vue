@@ -20,6 +20,7 @@ import AppItem from './components/AppItem.vue'
 import { appWindow } from '@tauri-apps/api/window'
 import { invoke } from '@tauri-apps/api'
 import { isRegistered, register, unregister } from '@tauri-apps/api/globalShortcut'
+import Fuse from 'fuse.js'
 
 export default {
     name: "App",
@@ -65,7 +66,16 @@ export default {
     },
     computed: {
         filteredApps(): App[] {
-            return this.apps.filter(app => app.name.toLowerCase().includes(this.search.toLowerCase()))
+            const fuse = new Fuse(this.apps, {
+                keys: ['name'],
+                includeScore: true,
+                shouldSort: true,
+                includeMatches: true,
+                threshold: 0.5,
+                distance: 1000,
+                // useExtendedSearch: true
+            })
+            return this.search ? fuse.search(this.search).map(result => result.item) : this.apps
         }
     },
     mounted() {

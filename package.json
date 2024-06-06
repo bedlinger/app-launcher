@@ -11,6 +11,7 @@
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "@tauri-apps/api": "^1",
+    "fuse.js": "^7.0.0",
     "quasar": "^2.0.0",
     "tauri-plugin-autostart-api": "github:tauri-apps/tauri-plugin-autostart#v1",
     "vue": "^3.3.4"
