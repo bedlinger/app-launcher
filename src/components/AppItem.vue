@@ -29,7 +29,7 @@ export default defineComponent({
         launchApp(app: App) {
             invoke('launch_app', { app })
                 .catch(console.error)
-                .then(_onfullfilled => {
+                .then(_onfulfilled => {
                     appWindow.hide()
                     this.$emit('clearSearch')
                 })

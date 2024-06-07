@@ -56,10 +56,20 @@ export default {
             })
             this.currentOpenShortcut = newShortcut
         },
-        async updateCloseShortcut() {
+        async registerCloseShortcut() {
             if (!await isRegistered('Alt+F4')) {
                 await register('Alt+F4', async () => {
                     await appWindow.close()
+                })
+            }
+        },
+        async registerSearchShortcut() {
+            if (!await isRegistered('Ctrl+Space')) {
+                await register('Ctrl+Space', async () => {
+                    const searchInput = this.$refs.search as HTMLInputElement
+                    searchInput.focus()
+                    searchInput.select()
+                    window.scrollTo(0, 0)
                 })
             }
         }
@@ -81,7 +91,8 @@ export default {
     mounted() {
         this.getInstalledApps()
         appWindow.center()
-        this.updateCloseShortcut()
+        this.registerCloseShortcut()
+        this.registerSearchShortcut()
     }
 }
 </script>

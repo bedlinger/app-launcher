@@ -67,8 +67,17 @@ export default defineComponent({
             }
             if (event.altKey) {
                 this.keys.push('Alt')
-            } 
+            }
             this.shortcut = this.keys.reverse().join('+')
+            if (this.shortcut.length === 0) {
+                this.shortcut = 'Alt+S'
+            }
+            if (this.shortcut === 'Alt+F4') {
+                this.shortcut = 'Alt+S'
+            }
+            if (this.shortcut === 'Ctrl+Space') {
+                this.shortcut = 'Alt+S'
+            }
             this.$emit('update-open-shortcut', this.shortcut)
         },
         saveSettings() {
