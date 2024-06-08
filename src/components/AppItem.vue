@@ -6,8 +6,9 @@
         <q-item-section>
             {{ app.name }}
         </q-item-section>
-        <q-btn label="Open location" no-caps ripple flat dense icon="launch" tabindex="-1"
-            @click.stop="openLocation($event, app)" />
+        <q-btn label="Open location" no-caps ripple flat dense icon="launch" tabindex="-1" @click.stop="openLocation($event, app)">
+            <q-tooltip>{{ app.path }}</q-tooltip>
+        </q-btn>
     </q-item>
 </template>
 
