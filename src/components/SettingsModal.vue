@@ -1,6 +1,5 @@
 <template>
-    <q-dialog v-model="showSettings" transition-show="slide-up" transition-hide="slide-down"
-        @escape-key="() => close">
+    <q-dialog v-model="showSettings" transition-show="slide-up" transition-hide="slide-down" @escape-key="() => close">
         <q-card style="width: 70%;">
             <q-toolbar>
                 <q-toolbar-title><span class="text-weight-bold">Settings</span></q-toolbar-title>
@@ -11,12 +10,15 @@
                 <div class="row">
                     <q-toggle label="Dark Mode" v-model="darkMode" class="col" />
                     <q-toggle label="Auto Start" v-model="autostart" class="col" />
+                </div>
+                <div class="row">
+                    <q-toggle label="Hide on Startup" v-model="hideOnStartup" class="col" />
                     <q-input class="col" label="Shortcut" v-model="shortcut" outlined dense
                         @keydown="updateOpenShortcut" />
                 </div>
                 <div class=" column items-center justify-center q-pt-sm">
                     <p class="text-h6">Primary Color</p>
-                    <q-color v-model="color" no-header no-footer style="width: 270px;" />
+                    <q-color v-model="color" no-header no-footer style="width: 240px;" />
                 </div>
             </q-card-section>
         </q-card>
@@ -27,6 +29,7 @@
 import { defineComponent } from 'vue'
 import { Dark } from 'quasar'
 import { enable, disable } from "tauri-plugin-autostart-api"
+import { appWindow } from '@tauri-apps/api/window'
 
 export default defineComponent({
     name: 'SettingsModal',
@@ -41,6 +44,7 @@ export default defineComponent({
         return {
             darkMode: false,
             autostart: true,
+            hideOnStartup: false,
             shortcut: 'Alt+S',
             keys: [] as string[],
             color: '#3758ef'
@@ -84,17 +88,22 @@ export default defineComponent({
             localStorage.setItem('settings', JSON.stringify({
                 darkMode: this.darkMode,
                 autostart: this.autostart,
+                hideOnStartup: this.hideOnStartup,
                 color: this.color,
                 shortcut: this.shortcut
             }))
         },
-        loadSettings() {
+        async loadSettings() {
             const settings = JSON.parse(localStorage.getItem('settings') || '{}')
             this.darkMode = settings.darkMode !== undefined ? settings.darkMode : false
             this.autostart = settings.autostart !== undefined ? settings.autostart : true
+            this.hideOnStartup = settings.hideOnStartup !== undefined ? settings.hideOnStartup : false
             this.color = settings.color || '#3758ef'
             this.shortcut = settings.shortcut || 'Alt+S'
             this.$emit('update-open-shortcut', this.shortcut)
+            if (this.hideOnStartup) {
+                await appWindow.hide()
+            }
         }
     },
     watch: {
