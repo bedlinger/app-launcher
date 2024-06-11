@@ -1,9 +1,16 @@
-# App-Launcher mit Tauri
+# [App Launcher for Windows](https://github.com/bedlinger/app-launcher)
 
-## Einleitung
+![GitHub Created At](https://img.shields.io/github/created-at/bedlinger/app-launcher)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/bedlinger/app-launcher)
 
-Das Ziel ist es eine Desktop-App zu erstellen mit [Tauri](https://tauri.app/), welche über einen Shortcut geöffnet wird. Im Hintergrund sind alle installierten Apps aufgelistet und können über die Suche gefunden und gestartet werden. Die App soll aktuell nur auf Windows laufen.
+A simple app launcher for Windows created with [Tauri](https://tauri.app/). It's a small tool that allows you to quickly launch your favorite applications.
+
+<img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png"/>
 
 ## Motivation
 
-Ich habe mich für dieses Projekt entschieden, da ich gerne mit Tauri arbeiten wollte und es eine gute Möglichkeit ist, um die Funktionalität von Tauri zu testen. Ebenso bin ich mit der Windows-Search unzufriden und wollte eine eigene Lösung dafür finden.
+I created this app to learn how to use [Tauri](https://tauri.app/). It's a great tool to create desktop applications with web technologies. Also I was unhappy the windows search and wanted a simple tool to quickly launch my apps.
+
+## Contributions and Feedback / Questions
+
+If you have any questions or feedback, feel free to open an issue or a pull request. I'm happy about any contributions.
