@@ -9,7 +9,7 @@ fn main() {
     let quit = CustomMenuItem::new("quit".to_string(), "Quit");
     let tray_menu = SystemTrayMenu::new()
         .add_item(quit);
-    let tray = SystemTray::new().with_menu(tray_menu).with_tooltip("app-launcher");
+    let tray = SystemTray::new().with_menu(tray_menu).with_tooltip("App-Launcher");
 
     tauri::Builder::default()
         .system_tray(tray)

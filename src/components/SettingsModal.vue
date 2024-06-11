@@ -99,8 +99,13 @@ export default defineComponent({
             this.hideOnStartup = settings.hideOnStartup !== undefined ? settings.hideOnStartup : false
             this.color = settings.color || '#3758ef'
             this.shortcut = settings.shortcut || 'Alt+S'
-            this.$emit('update-open-shortcut', this.shortcut)
+            if (this.autostart) {
+                await enable()
+            } else {
+                await disable()
+            }
             this.$emit('hide-on-startup', this.hideOnStartup)
+            this.$emit('update-open-shortcut', this.shortcut)
         }
     },
     watch: {
