@@ -91,7 +91,7 @@ export default {
                 // useExtendedSearch: true
             })
             const searchResults = this.search ? fuse.search(this.search).map(result => result.item) : this.apps
-            return searchResults.filter(app => app && app.name !== 'app-launcher')
+            return searchResults.filter(app => app && app.name !== 'App-Launcher')
         }
     },
     mounted() {
