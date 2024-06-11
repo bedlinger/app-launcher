@@ -14,7 +14,9 @@
                 <div class="row">
                     <q-toggle label="Hide on Startup" v-model="hideOnStartup" class="col" />
                     <q-input class="col" label="Shortcut" v-model="shortcut" outlined dense
-                        @keydown="updateOpenShortcut" />
+                        @keydown="updateOpenShortcut">
+                        <q-tooltip>Shortcuts can override the same shortcuts in other apps</q-tooltip>
+                    </q-input>
                 </div>
                 <div class=" column items-center justify-center q-pt-sm">
                     <p class="text-h6">Primary Color</p>
