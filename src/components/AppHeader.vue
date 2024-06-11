@@ -9,10 +9,10 @@
         </q-toolbar>
     </q-header>
     <SettingsModal v-model:showSettings="showSettingsModal" @close="closeSettingsModal"
-        @update-open-shortcut="updateOpenShortcut" />
+        @update-open-shortcut="updateOpenShortcut" @hide-on-startup="hideOnStartup" />
 </template>
 
-<script lang="ts">
+        <script lang="ts">
 import { defineComponent } from 'vue'
 import SettingsModal from './SettingsModal.vue'
 
@@ -32,6 +32,9 @@ export default defineComponent({
         },
         updateOpenShortcut(newShortcut: string) {
             this.$emit('update-open-shortcut', newShortcut)
+        },
+        hideOnStartup(hideOnStartup: boolean) {
+            this.$emit('hide-on-startup', hideOnStartup)
         }
     }
 })

@@ -1,6 +1,6 @@
 <template>
     <q-layout view="hHh lpR fFf">
-        <AppHeader @update-open-shortcut="updateOpenShortcut" />
+        <AppHeader @update-open-shortcut="updateOpenShortcut" @hide-on-startup="hideOnStartup" />
         <q-page-container>
             <q-page class="q-pa-md">
                 <q-input ref="search" v-model="search" placeholder="Search" filled dense autofocus />
@@ -71,6 +71,11 @@ export default {
                     searchInput.select()
                     window.scrollTo(0, 0)
                 })
+            }
+        },
+        async hideOnStartup(hideOnStartup: boolean) {
+            if (hideOnStartup) {
+                await appWindow.hide()
             }
         }
     },

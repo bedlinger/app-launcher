@@ -29,7 +29,6 @@
 import { defineComponent } from 'vue'
 import { Dark } from 'quasar'
 import { enable, disable } from "tauri-plugin-autostart-api"
-import { appWindow } from '@tauri-apps/api/window'
 
 export default defineComponent({
     name: 'SettingsModal',
@@ -101,9 +100,7 @@ export default defineComponent({
             this.color = settings.color || '#3758ef'
             this.shortcut = settings.shortcut || 'Alt+S'
             this.$emit('update-open-shortcut', this.shortcut)
-            if (this.hideOnStartup) {
-                await appWindow.hide()
-            }
+            this.$emit('hide-on-startup', this.hideOnStartup)
         }
     },
     watch: {
