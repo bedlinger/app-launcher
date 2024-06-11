@@ -90,7 +90,8 @@ export default {
                 distance: 1000,
                 // useExtendedSearch: true
             })
-            return this.search ? fuse.search(this.search).map(result => result.item) : this.apps
+            const searchResults = this.search ? fuse.search(this.search).map(result => result.item) : this.apps
+            return searchResults.filter(app => app && app.name !== 'app-launcher')
         }
     },
     mounted() {

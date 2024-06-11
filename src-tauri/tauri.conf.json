@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "app-launcher",
+    "productName": "App-Launcher",
     "version": "0.0.1"
   },
   "tauri": {
@@ -37,7 +37,7 @@
     "bundle": {
       "active": true,
       "targets": ["msi", "nsis"],
-      "identifier": "com.tauri.app-launcher",
+      "identifier": "com.bedlinger.app-launcher",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",

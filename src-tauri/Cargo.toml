@@ -1,5 +1,5 @@
 [package]
-name = "app-launcher"
+name = "App-Launcher"
 version = "0.0.1"
 description = "A simple App-Launcher for Windows"
 authors = ["bedllinger"]
