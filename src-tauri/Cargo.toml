@@ -1,6 +1,6 @@
 [package]
 name = "app_launcher"
-version = "1.0.0"
+version = "1.0.1"
 description = "A simple App-Launcher for Windows"
 authors = ["bedllinger"]
 edition = "2021"

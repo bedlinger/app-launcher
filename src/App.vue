@@ -44,12 +44,13 @@ export default {
                 await unregister(this.currentOpenShortcut)
             }
             await register(newShortcut, async () => {
+                this.getInstalledApps()
                 if (await appWindow.isVisible()) {
-                    await appWindow.hide();
+                    await appWindow.hide()
                     this.search = ''
                     window.scrollTo(0, 0)
                 } else {
-                    await appWindow.show();
+                    await appWindow.show()
                     await appWindow.setFocus();
                     (this.$refs.search as HTMLInputElement).focus()
                 }
