@@ -1,7 +1,10 @@
-# [App Launcher for Windows](https://github.com/bedlinger/app-launcher)
+# App Launcher for Windows
 
 ![GitHub Created At](https://img.shields.io/github/created-at/bedlinger/app-launcher)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/bedlinger/app-launcher)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/bedlinger/app-launcher/total)
+![GitHub License](https://img.shields.io/github/license/bedlinger/app-launcher)
+![GitHub Repo stars](https://img.shields.io/github/stars/bedlinger/app-launcher)
 
 A simple app launcher for Windows created with [Tauri](https://tauri.app/). It's a small tool that allows you to quickly launch your favorite applications.
 
@@ -19,6 +22,13 @@ I created this app to learn how to use [Tauri](https://tauri.app/). It's a great
 - Press `Ctrl+Space` to highlight the search bar
 - Press `Alt+S` to open/close the App-Launcher, but you can change this shortcut in the settings
 - Settings to change the theme, the behavior when the app starts and add it to the autostart
+
+## Infos for Developers
+
+- `npm run tauri dev` - Start the app in development mode
+- `npm run tauri build` - Build the app for production
+- The frontend is located in the `src` folder, written with Vue.js and Quasar as a Component Library
+- The backend is located in the `src-tauri` folder, written in Rust
 
 ## Contributions and Feedback / Questions
 
