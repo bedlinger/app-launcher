@@ -17,6 +17,7 @@ import { defineComponent } from 'vue'
 import App from '../types/App'
 import { appWindow } from '@tauri-apps/api/window'
 import { invoke } from '@tauri-apps/api'
+import { type } from '@tauri-apps/api/os'
 
 export default defineComponent({
     name: 'AppItem',
@@ -27,17 +28,35 @@ export default defineComponent({
         }
     },
     methods: {
-        launchApp(app: App) {
-            invoke('launch_app', { app })
-                .catch(console.error)
-                .then(_onfulfilled => {
-                    appWindow.hide()
-                    this.$emit('clearSearch')
-                })
+        async launchApp(app: App) {
+            const os = await type()
+            if (os === 'Windows_NT') {
+                invoke('launch_app_win', { app })
+                    .catch(console.error)
+                    .then(_onfulfilled => {
+                        appWindow.hide()
+                        this.$emit('clearSearch')
+                    })
+            }
+            if (os === 'Linux') {
+                invoke('launch_app_linux', { app })
+                    .catch(console.error)
+                    .then(_onfulfilled => {
+                        appWindow.hide()
+                        this.$emit('clearSearch')
+                    })
+            }
         },
-        openLocation(event: Event, app: App) {
+        async openLocation(event: Event, app: App) {
             event.stopPropagation();
-            invoke('open_location', { app })
+            const os = await type()
+            if (os === 'Windows_NT') {
+                invoke('open_file_location_win', { app })
+            }
+            if (os === 'Linux') {
+                // TODO: Implement open_file_location_linux
+                //invoke('open_file_location_linux', { app })
+            }
         }
     }
 })

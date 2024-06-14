@@ -20,6 +20,8 @@ import AppItem from './components/AppItem.vue'
 import { appWindow } from '@tauri-apps/api/window'
 import { invoke } from '@tauri-apps/api'
 import { isRegistered, register, unregister } from '@tauri-apps/api/globalShortcut'
+import { type } from '@tauri-apps/api/os'
+import { executableDir } from '@tauri-apps/api/path'
 import Fuse from 'fuse.js'
 
 export default {
@@ -37,7 +39,14 @@ export default {
     },
     methods: {
         async getInstalledApps() {
-            this.apps = await invoke('get_installed_apps')
+            const os = await type()
+            if (os === 'Windows_NT') {
+                this.apps = await invoke('get_installed_apps_win')
+            }
+            if (os === 'Linux') {
+                const executableDirPath = await executableDir()
+                this.apps = await invoke('get_installed_apps_linux', { executableDirPath })
+            }
         },
         async updateOpenShortcut(newShortcut: string) {
             if (this.currentOpenShortcut) {
